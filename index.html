@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>श्री बालकन्या माध्यमिक विद्यालय</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', sans-serif; color: #222; background: #f5f7fa; }
+
+  /* NAV */
+  nav {
+    background: #1a237e;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .nav-inner {
+    max-width: 1100px; margin: auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px;
+  }
+  .nav-logo { color: #fff; font-size: 1rem; font-weight: 700; padding: 14px 0; line-height: 1.3; }
+  .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+  .nav-links a {
+    color: #c5cae9; text-decoration: none; padding: 16px 10px;
+    font-size: 0.85rem; transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: #fff; border-bottom: 3px solid #ffd600; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #1565c0 100%);
+    color: #fff; text-align: center; padding: 60px 20px 50px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .school-emblem {
+    width: 90px; height: 90px; background: #fff; border-radius: 50%;
+    margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; line-height: 1.3; }
+  .hero p { font-size: 1rem; opacity: 0.85; margin-bottom: 6px; }
+  .hero .tagline {
+    display: inline-block; margin-top: 16px;
+    background: #ffd600; color: #1a237e;
+    padding: 6px 20px; border-radius: 20px; font-weight: 700; font-size: 0.9rem;
+  }
+
+  /* NOTICE TICKER */
+  .ticker {
+    background: #ffd600; color: #1a237e; padding: 8px 0; overflow: hidden;
+  }
+  .ticker-inner { display: flex; align-items: center; }
+  .ticker-label {
+    background: #1a237e; color: #ffd600; padding: 4px 16px;
+    font-weight: 700; white-space: nowrap; font-size: 0.85rem;
+  }
+  .ticker-text {
+    white-space: nowrap; animation: scroll 30s linear infinite;
+    font-weight: 600; padding-left: 40px; font-size: 0.9rem;
+  }
+  @keyframes scroll { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
+
+  /* SECTIONS */
+  section { display: none; }
+  section.active { display: block; }
+  .section-wrap { max-width: 1100px; margin: auto; padding: 40px 20px; }
+  .section-title {
+    font-size: 1.5rem; font-weight: 800; color: #1a237e;
+    border-left: 5px solid #ffd600; padding-left: 14px; margin-bottom: 30px;
+  }
+
+  /* CARDS */
+  .card {
+    background: #fff; border-radius: 12px; padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 20px;
+  }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 30px; }
+  .stat {
+    background: #fff; border-radius: 12px; padding: 20px; text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border-top: 4px solid #1a237e;
+  }
+  .stat .num { font-size: 2rem; font-weight: 800; color: #1a237e; }
+  .stat .lbl { font-size: 0.85rem; color: #666; margin-top: 4px; }
+
+  /* PERSON CARDS */
+  .person-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .person-card {
+    background: #fff; border-radius: 12px; padding: 24px; text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border-top: 4px solid #1a237e;
+    transition: transform 0.2s;
+  }
+  .person-card:hover { transform: translateY(-4px); }
+  .person-avatar {
+    width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; background: #e8eaf6;
+  }
+  .person-card h3 { font-size: 1rem; font-weight: 700; color: #1a237e; margin-bottom: 4px; }
+  .person-card .role { font-size: 0.8rem; color: #888; margin-bottom: 10px; }
+  .person-card .phone {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #e8eaf6; color: #1a237e; padding: 6px 14px;
+    border-radius: 20px; font-size: 0.85rem; font-weight: 600; text-decoration: none;
+  }
+
+  /* TEACHER TABLE */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  th { background: #1a237e; color: #fff; padding: 12px 16px; text-align: left; font-size: 0.9rem; }
+  td { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f5f7fa; }
+
+  /* ADMISSION */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .step {
+    background: #fff; border-radius: 12px; padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08); position: relative;
+  }
+  .step-num {
+    width: 36px; height: 36px; background: #1a237e; color: #fff;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; margin-bottom: 12px; font-size: 1rem;
+  }
+  .step h3 { font-size: 0.95rem; color: #1a237e; margin-bottom: 6px; }
+  .step p { font-size: 0.85rem; color: #555; line-height: 1.5; }
+
+  /* NEWS */
+  .news-item {
+    background: #fff; border-radius: 12px; padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 14px;
+    border-left: 5px solid #ffd600; display: flex; gap: 16px; align-items: flex-start;
+  }
+  .news-date {
+    background: #1a237e; color: #fff; border-radius: 8px; padding: 8px 12px;
+    text-align: center; min-width: 56px; font-size: 0.8rem; line-height: 1.4;
+    font-weight: 700;
+  }
+  .news-content h3 { font-size: 0.95rem; color: #1a237e; margin-bottom: 4px; }
+  .news-content p { font-size: 0.85rem; color: #555; }
+
+  /* GALLERY */
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .gallery-item {
+    border-radius: 12px; overflow: hidden; aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #1a237e, #1565c0);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 2.5rem; cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+  }
+  .gallery-item:hover { transform: scale(1.03); }
+  .gallery-item span { font-size: 0.75rem; display: block; text-align: center; margin-top: 8px; opacity: 0.8; }
+
+  /* CONTACT */
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .contact-card {
+    background: #fff; border-radius: 12px; padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08); text-align: center;
+  }
+  .contact-icon { font-size: 2rem; margin-bottom: 12px; }
+  .contact-card h3 { font-size: 0.95rem; color: #1a237e; font-weight: 700; margin-bottom: 6px; }
+  .contact-card p { font-size: 0.9rem; color: #555; line-height: 1.6; }
+
+  /* FOOTER */
+  footer {
+    background: #1a237e; color: #c5cae9; text-align: center;
+    padding: 20px; font-size: 0.82rem; margin-top: 20px;
+  }
+  footer span { color: #ffd600; font-weight: 700; }
+
+  /* ABOUT SECTION */
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .info-item { background: #fff; border-radius: 12px; padding: 16px 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .info-item .label { font-size: 0.78rem; color: #888; margin-bottom: 4px; }
+  .info-item .value { font-size: 0.95rem; font-weight: 700; color: #1a237e; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">🏫 बालकन्या मा.वि.</div>
+    <div class="nav-links">
+      <a href="#" class="active" onclick="show('home',this)">गृहपृष्ठ</a>
+      <a href="#" onclick="show('about',this)">हाम्रो बारेमा</a>
+      <a href="#" onclick="show('teachers',this)">शिक्षकहरू</a>
+      <a href="#" onclick="show('admission',this)">भर्ना</a>
+      <a href="#" onclick="show('news',this)">सूचना</a>
+      <a href="#" onclick="show('gallery',this)">Gallery</a>
+      <a href="#" onclick="show('contact',this)">सम्पर्क</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="school-emblem">🏫</div>
+  <h1>श्री बालकन्या माध्यमिक विद्यालय</h1>
+  <p>इलाम नगरपालिका–११, सोयाक, इलाम</p>
+  <p>स्थापना: २०१४ | मान्यता: माध्यमिक तह (कक्षा बालविकास–१०)</p>
+  <div class="tagline">✨ ज्ञान नै शक्ति हो ✨</div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <div class="ticker-label">📢 सूचना</div>
+    <div class="ticker-text">नयाँ शैक्षिक सत्र २०८३ को लागि भर्ना सुरु भएको छ। &nbsp;&nbsp;&nbsp; कक्षा नर्सरीदेखी कक्षा ५ सम्म अङ्ग्रेजी माध्यमबाट पठनपाठन हुने जानकारी गराइन्छ। &nbsp;&nbsp;&nbsp; विद्यालय समय: बिहान १०:०० – अपरान्ह ४:०० बजे।</div>
+  </div>
+</div>
+
+<!-- HOME -->
+<section id="home" class="active">
+  <div class="section-wrap">
+    <div class="stats">
+      <div class="stat"><div class="num">२८२+</div><div class="lbl">विद्यार्थी</div></div>
+      <div class="stat"><div class="num">२१</div><div class="lbl">शिक्षक/कर्मचारी</div></div>
+      <div class="stat"><div class="num">१२</div><div class="lbl">कक्षाहरू</div></div>
+      <div class="stat"><div class="num">६९</div><div class="lbl">वर्षको अनुभव</div></div>
+    </div>
+
+    <div class="section-title">प्रमुख व्यक्तित्वहरू</div>
+    <div class="person-grid">
+      <div class="person-card">
+        <div class="person-avatar">👨‍💼</div>
+        <h3>अमिरमान तामाङ</h3>
+        <div class="role">प्रधानाध्यापक</div>
+        <a class="phone" href="tel:+9779762615195">📞 फोन गर्नुहोस्</a>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">👨‍💼</div>
+        <h3>मोहन सापकोटा</h3>
+        <div class="role">सहायक प्रधानाध्यापक</div>
+        <a class="phone" href="tel:+9779842651470">📞 फोन गर्नुहोस्</a>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">👨‍💼</div>
+        <h3>नवराज धिताल</h3>
+        <div class="role">सूचना अधिकारी</div>
+        <a class="phone" href="tel:+9779842745544">📞 फोन गर्नुहोस्</a>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">👩‍💼</div>
+        <h3>झुमा सुबेदी</h3>
+        <div class="role">गुनासो सुनुवाइ अधिकारी</div>
+        <a class="phone" href="tel:+9779842745792">📞 फोन गर्नुहोस्</a>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:30px">ताजा सूचनाहरू</div>
+    <div class="news-item">
+      <div class="news-date">२०८३<br>वैशाख</div>
+      <div class="news-content">
+        <h3>नयाँ भर्ना सुरु</h3>
+        <p>शैक्षिक सत्र २०८३ को लागि कक्षा बालविकास देखि १० सम्म भर्ना खुल्ला छ।</p>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-date">२०८३<br>मंसिर</div>
+      <div class="news-content">
+        <h3>SEE परीक्षा तयारी</h3>
+        <p>कक्षा १० का विद्यार्थीहरूको लागि थप अभ्यास कक्षा सञ्चालन हुनेछ।</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-wrap">
+    <div class="section-title">विद्यालयको बारेमा</div>
+    <div class="card">
+      <p style="line-height:1.9; font-size:0.95rem; color:#444;">
+        श्री बालकन्या माध्यमिक विद्यालय इलाम नगरपालिका–११, सोयाकमा अवस्थित एक प्रतिष्ठित शैक्षिक संस्था हो।
+        यो विद्यालयले दशकौं देखि यस क्षेत्रका बालबालिकाहरूलाई गुणस्तरीय शिक्षा प्रदान गर्दै आएको छ।
+        विद्यालयको मुख्य उद्देश्य विद्यार्थीहरूलाई नैतिक, शैक्षिक र सामाजिक रूपमा सक्षम बनाउनु हो।
+      </p>
+    </div>
+
+    <div class="section-title">विद्यालयको जानकारी</div>
+    <div class="info-grid">
+      <div class="info-item"><div class="label">विद्यालयको नाम</div><div class="value">श्री बालकन्या माध्यमिक विद्यालय</div></div>
+      <div class="info-item"><div class="label">ठेगाना</div><div class="value">इलाम नगरपालिका–११, सोयाक</div></div>
+      <div class="info-item"><div class="label">जिल्ला</div><div class="value">इलाम,कोशी प्रदेश</div></div>
+      <div class="info-item"><div class="label">तह</div><div class="value">माध्यमिक (कक्षा बालविकास – १०)</div></div>
+      <div class="info-item"><div class="label">माध्यम</div><div class="value">नेपाली र अङ्ग्रेजी</div></div>
+      <div class="info-item"><div class="label">प्रकार</div><div class="value">सामुदायिक विद्यालय</div></div>
+    </div>
+
+    <div class="section-title" style="margin-top:30px">हाम्रो लक्ष्य</div>
+    <div class="card" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div>
+        <h3 style="color:#1a237e; margin-bottom:8px;">🎯 उद्देश्य</h3>
+        <p style="font-size:0.9rem; color:#555; line-height:1.7;">गुणस्तरीय शिक्षा प्रदान गरी विद्यार्थीहरूलाई राष्ट्रिय र अन्तर्राष्ट्रिय स्तरमा प्रतिस्पर्धी बनाउनु।</p>
+      </div>
+      <div>
+        <h3 style="color:#1a237e; margin-bottom:8px;">👁️ दृष्टिकोण</h3>
+        <p style="font-size:0.9rem; color:#555; line-height:1.7;">प्रत्येक विद्यार्थीको समग्र विकास गरी समाजमा योगदान दिन सक्ने नागरिक तयार पार्नु।</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEACHERS -->
+<section id="teachers">
+  <div class="section-wrap">
+    <div class="section-title">शिक्षक तथा कर्मचारीहरू</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>क्र.सं.</th>
+            <th>नाम</th>
+            <th>पद</th>
+            <th>विषय</th>
+            <th>योग्यता</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>१</td><td>अमिरमान तामाङ</td><td>प्रधानाध्यापक</td><td>नि.मा.,तृतीय</td><td>I.SC.</td></tr>
+                    <tr><td>२</td><td>मोहन सापकोटा</td><td>सह- प्रधानाध्यापक</td><td>मा.वि.,तृतीय</td><td>M.Ed.</td></tr>
+          <tr><td>३</td><td>नवराज धिताल</td><td>सूचना अधिकारी / शिक्षक</td><td>लेखा</td><td>B.B.S.</td></tr>
+          <tr><td>४</td><td>झुमा सुबेदी</td><td>शिक्षक</td><td>विज्ञान</td><td>मा.वि.,तृतीय</td><td>M.Ed.</td></tr>
+          <tr><td>५</td><td>रामचन्द्र दुलाल</td><td>शिक्षक</td><td>अङ्ग्रेजी</td><td>मा.वि.,तृतीय</td><td>B.Ed.</td></tr>
+          <tr><td>६</td><td>नरेन्द्र प्रसाद आचार्य</td><td>शिक्षक</td><td>अङ्ग्रेजी</td><td>नि.मा.,द्वितीय</td><td>B.Ed.</td></tr>
+          <tr><td>७</td><td>भवानी प्रसाद विष्ट</td><td>शिक्षक</td><td>नेपाली</td><td>नि.मा.,तृतीय</td><td>M.Ed., M.A.</td></tr>
+          <tr><td>८</td><td>नारायण दङ्गाल</td><td>शिक्षक</td><td>विज्ञान</td><td>नि.मा.,तृतीय</td><td>B.Ed.</td></tr>
+          <tr><td>९</td><td>प्रेम प्रसाद चापागार्इ</td><td>शिक्षक</td><td>प्रा.वि.,द्वितीय</td><td>S.L.C.</td></tr>
+                    <tr><td>१०</td><td>डुक प्रसाद आचार्य</td><td>शिक्षक</td><td>प्रा.वि.,तृतीय</td><td>B.Ed.</td></tr>
+          <tr><td>११</td><td>राम बहादुर एक्तेन</td><td>शिक्षक</td><td>प्रा.वि.,तृतीय</td><td>+2</td></tr>
+          <tr><td>१२</td><td>ऋषिमान रार्इ</td><td>शिक्षक</td><td>प्रा.वि.,तृतीय</td><td>B.Ed.</td></tr>
+          <tr><td>१३</td><td>लक्ष्मी मगर</td><td>शिक्षक</td><td>प्रा.वि.,तृतीय</td><td>M.Ed.</td></tr>
+          <tr><td>१४</td><td>विनोद दाहाल</td><td>शिक्षक</td><td>प्रा.वि.,तृतीय</td><td>M.Ed.</td></tr>
+                   <tr><td>१५</td><td>विष्णुमाया कोइराला</td><td>शिक्षक</td><td>बा.वि.</td><td>+2</td></tr>
+                  <tr><td>१६</td><td>गोपाल फागो</td><td>शिक्षक</td><td>बा.वि.</td><td>S.L.C.</td></tr>
+         <tr><td>१७</td><td>दिल कुमारी खतिवडा</td><td>शिक्षक</td><td>बा.वि.</td><td>+2</td></tr>
+                  <tr><td>१८</td><td>कविता एक्तेन</td><td>शिक्षक</td><td>प्रा.वि.</td><td>B.A.</td></tr>
+         <tr><td>१९</td><td>मिना देवी एक्तेन</td><td>शिक्षक</td><td>प्रा.वि.</td><td>B.Ed.</td></tr>
+         <tr><td>२०</td><td>लक्ष्मीकान्त चौलागार्इ</td><td>का.स.</td><td>८</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:0.82rem; color:#888; margin-top:12px;">*</p>
+  </div>
+</section>
+
+<!-- ADMISSION -->
+<section id="admission">
+  <div class="section-wrap">
+    <div class="section-title">भर्ना जानकारी</div>
+    <div class="card" style="background: linear-gradient(135deg,#e8eaf6,#fff); border-left: 5px solid #ffd600; margin-bottom:30px;">
+      <h3 style="color:#1a237e; margin-bottom:8px;">📣 भर्ना खुला छ — शैक्षिक सत्र २०८३</h3>
+      <p style="font-size:0.9rem; color:#555;">कक्षा नर्सरी देखि १० सम्म नयाँ विद्यार्थीहरूको भर्ना लिइँदैछ। सोधपुछका लागि विद्यालयमा सम्पर्क गर्नुहोस्।</p>
+    </div>
+
+    <div class="section-title">भर्ना प्रक्रिया</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">१</div>
+        <h3>फारम लिनुहोस्</h3>
+        <p>विद्यालयको कार्यालयबाट भर्ना फारम लिनुहोस् वा सम्पर्क गर्नुहोस्।</p>
+      </div>
+      <div class="step">
+        <div class="step-num">२</div>
+        <h3>कागजात बुझाउनुहोस्</h3>
+        <p>जन्मदर्ता, चारित्रिक प्रमाणपत्र,मार्कसिट, पासपोर्ट फोटो।</p>
+      </div>
+      <div class="step">
+        <div class="step-num">३</div>
+        <h3>शुल्क तिर्नुहोस्</h3>
+        <p>निर्धारित अभिभावक सहयोग शुल्क कार्यालयमा बुझाउनुहोस्।</p>
+      </div>
+      <div class="step">
+        <div class="step-num">४</div>
+        <h3>भर्ना पक्का गर्नुहोस्</h3>
+        <p>भर्ना स्वीकृतिपछि कक्षा सुरु हुने मिति थाहा पाउनुहोस्।</p>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:30px">आवश्यक कागजातहरू</div>
+    <div class="card">
+      <ul style="list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <li style="font-size:0.9rem; padding:8px; background:#f5f7fa; border-radius:8px;">✅ जन्मदर्ताको प्रतिलिपि</li>
+        <li style="font-size:0.9rem; padding:8px; background:#f5f7fa; border-radius:8px;">✅ चारित्रिक प्रमाणपत्र</li>
+        <li style="font-size:0.9rem; padding:8px; background:#f5f7fa; border-radius:8px;">✅ अघिल्लो कक्षाको नतिजा</li>
+        <li style="font-size:0.9rem; padding:8px; background:#f5f7fa; border-radius:8px;">✅ पासपोर्ट साइज फोटो (२ प्रति)</li>
+        <li style="font-size:0.9rem; padding:8px; background:#f5f7fa; border-radius:8px;">✅ स्थानान्तरण प्रमाणपत्र</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+  <div class="section-wrap">
+    <div class="section-title">समाचार तथा सूचनाहरू</div>
+    <div class="news-item">
+      <div class="news-date">२०८३<br>वैशाख</div>
+      <div class="news-content">
+        <h3>नयाँ शैक्षिक सत्र भर्ना सुरु</h3>
+        <p>२०८३ शैक्षिक सत्रको लागि कक्षा नर्सरी देखि १० सम्म भर्ना खुला भएको जानकारी गराइन्छ।</p>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-date">२०८३<br>वैशाख</div>
+      <div class="news-content">
+      </div>
+    </div>
+      </div>
+    </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-wrap">
+    <div class="section-title">फोटो ग्यालेरी</div>
+    <div class="gallery-grid">
+      <div class="gallery-item" style="background:linear-gradient(135deg,#1a237e,#283593);">🏫<br><span>विद्यालय भवन</span></div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#1565c0,#1976d2);">📚<br><span>पुस्तकालय</span></div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#0d47a1,#1565c0);">🔬<br><span>विज्ञान प्रयोगशाला</span></div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#283593,#3949ab);">💻<br><span>कम्प्युटर कोठा</span></div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#1a237e,#1565c0);">⚽<br><span>खेल मैदान</span></div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#3949ab,#5c6bc0);">🎭<br><span>सांस्कृतिक कार्यक्रम</span></div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#1565c0,#0d47a1);">🏆<br><span>पुरस्कार वितरण</span></div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#283593,#1a237e);">🌳<br><span>विद्यालय परिसर</span></div>
+    </div>
+    <p style="font-size:0.82rem; color:#888; margin-top:16px; text-align:center;">* वास्तविक फोटोहरू थप्नका लागि विद्यालयलाई सम्पर्क गर्नुहोस्।</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-wrap">
+    <div class="section-title">सम्पर्क जानकारी</div>
+
+    <div class="section-title" style="font-size:1.1rem; margin-bottom:20px;">प्रमुख व्यक्तित्वहरू</div>
+    <div class="person-grid" style="margin-bottom:30px;">
+      <div class="person-card">
+        <div class="person-avatar">👨‍💼</div>
+        <h3>अमिरमान तामाङ्ग</h3>
+        <div class="role">प्रधानाध्यापक</div>
+        <a class="phone" href="tel:+9779762615195">📞 फोन गर्नुहोस्</a>
+                </div>
+              <div class="person-card">
+        <div class="person-avatar">👨‍💼</div>
+        <h3>मोहन सापकोटा</h3>
+        <div class="role">सह-प्रधानाध्यापक</div>
+        <a class="phone" href="tel:+9779842651470">📞 फोन गर्नुहोस्</a>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">👨‍💼</div>
+        <h3>नवराज धिताल</h3>
+        <div class="role">सूचना अधिकारी</div>
+        <a class="phone" href="tel:+9779842745544">📞 फोन गर्नुहोस्</a>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">👩‍💼</div>
+        <h3>झुमा सुबेदी</h3>
+        <div class="role">गुनासो सुनुवाइ अधिकारी</div>
+        <a class="phone" href="tel:+9779842745792">📞 फोन गर्नुहोस्</a>
+      </div>
+    </div>
+
+    <div class="section-title" style="font-size:1.1rem;">विद्यालयको सम्पर्क</div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <h3>ठेगाना</h3>
+        <p>इलाम नगरपालिका–११<br>सोयाक, इलाम<br>कोशी प्रदेश, नेपाल</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📞</div>
+        <h3>फोन नम्बर</h3>
+        <p>कार्यालय: (फोन नं. राख्नुहोस्)<br>प्रधानाध्यापक: (9762615195)</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📧</div>
+        <h3>इमेल</h3>
+        <p>balkanyasoyak<br>@gmail.com</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🕐</div>
+        <h3>कार्यालय समय</h3>
+        <p>सोम–शुक्र<br>बिहान १०:०० – ४:०० बजे<br>शनिबार-आइतबार बन्द</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© २०८३ <span>श्री बालकन्या माध्यमिक विद्यालय</span> — इलाम नगरपालिका–११, सोयाक, इलाम</p>
+  <p style="margin-top:6px; font-size:0.78rem;">छोरीलार्इ पनि विद्यालय पठाऔँ, शिक्षित समाजको निर्माण गरौँ</p>
+<header>
+
+<script>
+  function show(id, el) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    if(el) el.classList.add('active');
+    window.scrollTo(0,0);
+    return false;
+  }
+</script>
+</body>
+</html>
